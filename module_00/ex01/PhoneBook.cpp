@@ -11,8 +11,6 @@ PhoneBook::~PhoneBook() {}
 void	PhoneBook::addContact(void)
 {
 	this->m_contacts[++m_index % 8].addInfo();
-	if (m_index > 6)
-		m_index = -1;
 }
 
 void	PhoneBook::searchMenu(void) const
@@ -26,7 +24,7 @@ void	PhoneBook::searchMenu(void) const
 	std::cout << std::endl;
 	std::cout << "|__________|__________|__________|__________|" << std::endl;
 	std::cout << "|          |          |          |          |" << std::endl;
-	for(int i = 0; i <= m_index; i++)
+	for(int i = 0; i <= ((m_index >= 7) ? 7 : m_index); i++)
 	{
 		std::cout << "|" << std::setw(10) << i;
 		m_contacts[i].viewInfo();
