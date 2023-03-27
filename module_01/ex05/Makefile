@@ -1,4 +1,4 @@
-SRCS = main.cpp Sed.cpp
+SRCS = main.cpp Harl.cpp
 OBJS = $(SRCS:.cpp=.o)
 # DEPS = $(SRCS:.cpp=.d)
 
@@ -9,7 +9,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 # CFLAGS += -fsanitize=address
 INCLUDE = -I. 
 
-NAME = sedreplace
+NAME = harl
 
 all: $(NAME)
 

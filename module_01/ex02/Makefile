@@ -9,7 +9,7 @@ CFLAGS = -Wall -Wextra -Werror -std=c++98
 # CFLAGS += -fsanitize=address
 INCLUDE = -I. 
 
-NAME = zombie 
+NAME = ex02 
 
 all: $(NAME)
 

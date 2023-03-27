@@ -28,12 +28,15 @@ void Sed::replace(std::string s1, std::string s2)
 	while (std::getline(infile, line))
 	{
 		size_t	len_s1 = s1.length();
-		for(size_t pos = 0; pos < line.length(); pos++)
+		if (len_s1)
 		{
-			if (not line.compare(pos, len_s1, s1))
+			for(size_t pos = 0; pos < line.length(); pos++)
 			{
-				line.erase(pos, len_s1);
-				line.insert(pos, s2);
+				if (not line.compare(pos, len_s1, s1))
+				{
+					line.erase(pos, len_s1);
+					line.insert(pos, s2);
+				}
 			}
 		}
 		outfile << line;
