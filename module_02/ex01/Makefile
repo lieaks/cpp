@@ -13,7 +13,7 @@ NAME = fixed
 
 all: $(NAME)
 
-%.o:	%.c
+%.o:	%.cpp
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME): $(OBJS)

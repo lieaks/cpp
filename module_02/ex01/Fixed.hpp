@@ -20,8 +20,9 @@ class Fixed
 
 	private:
 	int	m_nb;
-	static const int m_fractBits;
+	static const int m_fractBits = 8;
 };
 
 std::ostream & operator << (std::ostream &out, const Fixed &rhs);
+
 #endif //FIXED_HPP
