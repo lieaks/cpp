@@ -1,8 +1,6 @@
 #include "Fixed.hpp"
 #include <iostream>
 
-static const int m_fractBits = 8;
-
 Fixed::Fixed() : m_nb(0) 
 {
 	std::cout << "Default constructor called" << std::endl;
@@ -11,7 +9,7 @@ Fixed::Fixed() : m_nb(0)
 Fixed::Fixed(const Fixed &src)
 {
 	std::cout << "Copy constructor called" << std::endl;
-	*this = src;
+	m_nb = src.getRawBits();
 }
 
 Fixed::~Fixed() {

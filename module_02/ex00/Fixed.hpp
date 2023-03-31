@@ -14,6 +14,6 @@ class Fixed
 
 	private:
 	int	m_nb;
-	static const int m_fractBits;
+	static const int m_fractBits = 8;
 };
 #endif //FIXED_HPP

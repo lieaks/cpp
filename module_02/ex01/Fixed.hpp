@@ -8,7 +8,7 @@ class Fixed
 	public:
 	Fixed();
 	Fixed(const int nb);
-	Fixed(const double nb);
+	Fixed(const float nb);
 	Fixed(const Fixed &src);
 	~Fixed();
 	Fixed & operator = (const Fixed &rhs);

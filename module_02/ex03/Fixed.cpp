@@ -7,7 +7,7 @@ Fixed::Fixed() : m_nb(0){}
 
 Fixed::Fixed(const int nb) : m_nb(nb << m_fractBits){}
 
-Fixed::Fixed(const double nb) : m_nb(roundf( nb * (1 << m_fractBits))){}
+Fixed::Fixed(const float nb) : m_nb(roundf( nb * (1 << m_fractBits))){}
 
 Fixed::Fixed(const Fixed &src){
 	*this = src;}

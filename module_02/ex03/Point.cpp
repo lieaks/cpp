@@ -1,11 +1,10 @@
 #include "Point.hpp"
 
-Point::Point() : m_y(0), m_x(0) {}
+Point::Point() : m_x(0), m_y(0) {}
 
 Point::Point(const float x, const float y) : m_x(x), m_y(y) {}
 
-Point::Point(const Point &src) {
-	*this = src;}
+Point::Point(const Point &src) : m_x(src.getX()), m_y(src.getY()) {}
 
 Point::~Point() {}
 

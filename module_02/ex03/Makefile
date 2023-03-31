@@ -2,8 +2,8 @@ SRCS = main.cpp Fixed.cpp Point.cpp bsp.cpp
 OBJS = $(SRCS:.cpp=.o)
 # DEPS = $(SRCS:.cpp=.d)
 
-CC = c++
-CFLAGS = -Wall -Wextra -Werror -std=c++98 
+CXX = c++
+CPPFLAGS = -Wall -Wextra -Werror -std=c++98 
 # CFLAGS += MMD
 # CFLAGS += -g3
 # CFLAGS += -fsanitize=address
@@ -13,11 +13,8 @@ NAME = fixed
 
 all: $(NAME)
 
-%.o:	%.cpp
-	$(CC) $(CFLAGS) -c $< -o $@
-
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $(INCLUDE) -o $(NAME) $(OBJS)
+	$(CXX) $(CPPFLAGS) $(INCLUDE) -o $(NAME) $(OBJS)
 
 # -include $(DEPS)
 

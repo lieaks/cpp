@@ -12,7 +12,7 @@ Fixed::Fixed(const int nb) : m_nb(nb << m_fractBits)
 	std::cout << "Int constructor called" << std::endl;
 }
 
-Fixed::Fixed(const double nb) : m_nb(roundf (nb * (1 << m_fractBits)))
+Fixed::Fixed(const float nb) : m_nb(roundf (nb * (1 << m_fractBits)))
 {
 	std::cout << "Float constructor called" << std::endl;
 }
