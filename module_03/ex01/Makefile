@@ -1,4 +1,4 @@
-SRCS = main.cpp ClapTrap.cpp 
+SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp 
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 
@@ -9,7 +9,7 @@ CXXFLAGS += -MMD
 # CFLAGS += -fsanitize=address
 INCLUDE = -I. 
 
-NAME = claptrap
+NAME = scavtrap
 
 all: $(NAME)
 

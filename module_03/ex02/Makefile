@@ -1,4 +1,4 @@
-SRCS = main.cpp ClapTrap.cpp 
+SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp 
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 
@@ -9,7 +9,7 @@ CXXFLAGS += -MMD
 # CFLAGS += -fsanitize=address
 INCLUDE = -I. 
 
-NAME = claptrap
+NAME = fragtrap
 
 all: $(NAME)
 
@@ -27,6 +27,6 @@ fclean: clean
 re: fclean all
 
 leak: $(NAME)
-	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+	make && valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
 
 .PHONY: all clean fclean re 
