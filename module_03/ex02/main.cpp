@@ -6,11 +6,12 @@ int	main()
 {
 	ScavTrap david("David");
 	FragTrap goliath("Goliath");
+	FragTrap lol(goliath);
 	
-	std::cout << "Name: " << david.getName() << std::endl;
-	std::cout << "Hit points: " << david.getHitPoints() << std::endl;
-	std::cout << "Energy points: " << david.getEnergyPoints() << std::endl;
-	std::cout << "Attack damage: " << david.getAttackDamage() << std::endl;
+	std::cout << "Name: " << lol.getName() << std::endl;
+	std::cout << "Hit points: " << lol.getHitPoints() << std::endl;
+	std::cout << "Energy points: " << lol.getEnergyPoints() << std::endl;
+	std::cout << "Attack damage: " << lol.getAttackDamage() << std::endl;
 	david.attack("Goliath");
 	goliath.attack("David");
 	goliath.highFivesGuys();
