@@ -5,6 +5,8 @@ int	main()
 {
 	DiamondTrap david("David");
 	
+	david.guardGate();
+	david.highFivesGuys();
 	david.attack("Goliath");
 	david.whoAmI();
 
