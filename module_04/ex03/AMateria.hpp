@@ -8,6 +8,7 @@ class AMateria
 	protected:
 
     public:
+	AMateria();
 	AMateria(std::string const & type);
 
 	std::string const & getType() const; //Returns the materia type
