@@ -1,4 +1,4 @@
-SRCS= main.cpp Animal.cpp Cat.cpp Dog.cpp WrongAnimal.cpp WrongCat.cpp Brain.cpp 
+SRCS= main.cpp AMateria.cpp MateriaSource.cpp Character.cpp Cure.cpp Ice.cpp 
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 
@@ -9,7 +9,7 @@ CXXFLAGS += -MMD
 # CFLAGS += -fsanitize=address
 INCLUDE = -I. 
 
-NAME = animal
+NAME = materia
 
 all: $(NAME)
 

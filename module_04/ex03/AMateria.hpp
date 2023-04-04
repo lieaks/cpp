@@ -2,6 +2,7 @@
 #define AMATERIA_HPP
 
 #include <string>
+#include "ICharacter.hpp"
 
 class AMateria
 {
@@ -9,9 +10,10 @@ protected:
 	std::string m_type;
 
 public:
+	AMateria();
 	AMateria(std::string const & type);
 	AMateria(const AMateria &src);
-	~AMateria();
+	virtual ~AMateria();
 
 	AMateria & operator = (const AMateria &rhs);
 
@@ -20,7 +22,6 @@ public:
 	virtual void use(ICharacter& target);
 
 private:
-	AMateria();
 };
 
 #endif //AMATERIA_HPP
