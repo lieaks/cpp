@@ -17,6 +17,8 @@ Cat & Cat::operator = (const Cat &rhs) {
 	if (this != &rhs)
 	{
 		m_type = rhs.m_type;
+		if (m_brain != NULL)
+			delete(m_brain);
 		m_brain = new Brain(*rhs.m_brain);
 	}
 	return *this; }
