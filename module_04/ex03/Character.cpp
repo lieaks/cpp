@@ -10,17 +10,29 @@ Character::Character(std::string name) : m_name(name) {
 Character::~Character() {
 	for (int i = 0; i < 4; i++)
 	{
-		if (m_inventory[i])
+		if (m_inventory[i] != NULL)
 			delete m_inventory[i];
+		m_inventory[i] = NULL;
 	}
+}
+
+Character::Character(const Character &src) {
+	for (int i = 0; i < 4; i++)
+		m_inventory[i] = NULL;
+	*this = src;
 }
 
 Character & Character::operator= (const Character &rhs) {
 	if (this != &rhs)
 	{
-		m_name = rhs.getName();
+		m_name = rhs.m_name;
 		for (int i = 0; i < 4; i++)
-			m_inventory[i] = rhs.m_inventory[i];
+		{
+			if (m_inventory[i])
+				delete (m_inventory[i]);
+			if (rhs.m_inventory[i])
+				m_inventory[i] = rhs.m_inventory[i]->clone();
+		}
 	}
 	return *this;
 }

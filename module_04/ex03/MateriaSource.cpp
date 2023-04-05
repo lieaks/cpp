@@ -19,7 +19,11 @@ MateriaSource::~MateriaSource (){
 
 MateriaSource & MateriaSource::operator= (const MateriaSource &rhs) {
 	for (int i = 0; i < 4; i++)
+	{
+		if (m_materia[i] != NULL)
+			delete (m_materia[i]);
 		m_materia[i] = rhs.m_materia[i];
+	}
 	return *this;
 }
 

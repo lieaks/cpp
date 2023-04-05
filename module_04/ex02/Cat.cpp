@@ -11,6 +11,7 @@ Cat::~Cat() {
 
 Cat::Cat(const Cat &src) {
 	std::cout << "Cat copy Contructor called" << std::endl;
+	m_brain = NULL;
 	*this = src; }
 
 Cat & Cat::operator = (const Cat &rhs) {
@@ -25,3 +26,7 @@ Cat & Cat::operator = (const Cat &rhs) {
 
 void Cat::makeSound() const {
 	std::cout << "Miaou" << std::endl; }
+
+Brain* Cat::getBrain() const{
+	return m_brain;
+}

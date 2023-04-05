@@ -19,3 +19,11 @@ Brain & Brain::operator= (const Brain &rhs){
 	}
 	return *this;
 }
+
+std::string Brain::getIdea(int idx) const{
+	return m_ideas[idx];
+}
+
+void Brain::setIdea(int idx, std::string str){
+	m_ideas[idx] = str;
+}

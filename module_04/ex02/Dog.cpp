@@ -11,6 +11,7 @@ Dog::~Dog() {
 
 Dog::Dog(const Dog &src) {
 	std::cout << "Dog copy Contructor called" << std::endl;
+	m_brain = NULL;
 	*this = src; }
 
 Dog & Dog::operator = (const Dog &rhs) {
@@ -25,3 +26,7 @@ Dog & Dog::operator = (const Dog &rhs) {
 
 void Dog::makeSound() const {
 	std::cout << "Ouaf" << std::endl; }
+
+Brain* Dog::getBrain() const{
+	return m_brain;
+}
