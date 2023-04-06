@@ -53,11 +53,11 @@ void Character::equip(AMateria* m){
 }
 
 void Character::unequip(int idx){
-	if (m_inventory[idx])
-		m_inventory[idx] = NULL;
+	if (m_inventory[idx % 4])
+		m_inventory[idx % 4] = NULL;
 }
 
 void Character::use(int idx, ICharacter& target){
-	if (m_inventory[idx])
-		m_inventory[idx]->use(target);
+	if (m_inventory[idx % 4])
+		m_inventory[idx % 4]->use(target);
 }
