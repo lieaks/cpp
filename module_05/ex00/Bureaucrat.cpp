@@ -2,20 +2,19 @@
 
 Bureaucrat::Bureaucrat() {}
 
-Bureaucrat::Bureaucrat(std::string name, unsigned int grade) : m_name(name) {
+Bureaucrat::Bureaucrat(std::string name, int grade) : m_name(name) {
 	setGrade(grade);
 }
 
 Bureaucrat::~Bureaucrat() {}
 
-Bureaucrat::Bureaucrat(const Bureaucrat &src) {
+Bureaucrat::Bureaucrat(const Bureaucrat &src) : m_name(src.m_name) {
 	*this = src;
 }
 
 Bureaucrat &Bureaucrat::operator = (const Bureaucrat &rhs) {
 	if (this != &rhs)
 	{
-		m_name = rhs.m_name; 
 		m_grade = rhs.m_grade;
 	}
 	return *this;
@@ -23,10 +22,10 @@ Bureaucrat &Bureaucrat::operator = (const Bureaucrat &rhs) {
 
 void Bureaucrat::setGrade(int grade) {
 	if (grade < 1){
-		throw GradeTooLowException();
+		throw Bureaucrat::GradeTooLowException();
 	}
 	else if (grade > 150){
-		throw GradeTooHighException();
+		throw Bureaucrat::GradeTooHighException();
 	}
 	else
 		m_grade = grade;

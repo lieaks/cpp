@@ -31,18 +31,18 @@ int main()
 	catch (std::exception &e){
 		std::cout << e.what() << std::endl;
 	}
-	// std::cout << "--------COMPARE----------" << std::endl;
-	// try{
-	// 	Bureaucrat *david = new Bureaucrat("david", 1);
-	// 	Bureaucrat *goliath = new Bureaucrat("goliath", 151);
-	// 	std::cout << *david << *goliath;
-	// 	*david = *goliath; 
-	// 	std::cout << *david << *goliath;
-	// 	delete david;
-	// 	delete goliath;
-	// }
-	// catch (std::exception &e){
-	// 	std::cout << e.what() << std::endl;
-	// }
+	std::cout << "--------COMPARE----------" << std::endl;
+	try{
+		Bureaucrat david("david", 1);
+		Bureaucrat goliath("goliath", 150);
+		Bureaucrat dieu(david);
+
+		std::cout << david << goliath << "dieu: " << dieu;
+		david = goliath; 
+		std::cout << david << goliath << "dieu: " << dieu;
+	}
+	catch (std::exception &e){
+		std::cout << e.what() << std::endl;
+	}
 	return 0;
 };
