@@ -3,9 +3,9 @@
 
 #include <string>
 #include <iostream>
-#include "Form.hpp"
+#include "AForm.hpp"
 
-class Form;
+class AForm;
 
 class Bureaucrat
 {
@@ -23,7 +23,8 @@ public:
 	void setGrade(int grade);
 	void gradeIncrement();
 	void gradeDecrement();
-	void signForm(Form &form) const;
+	void signForm(AForm &form) const;
+	void executeForm(AForm const & form);
 
 	std::string getName() const;
 	int getGrade() const;

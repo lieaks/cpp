@@ -1,47 +1,47 @@
-#include "Form.hpp"
+#include "AForm.hpp"
 
 /* -----------------CONSTRUCTOR-----------------*/
-Form::Form() : m_name("default form"), m_signed(false), m_grade_to_sign(150), m_grade_to_exec(150) {}
+AForm::AForm() : m_name("default form"), m_signed(false), m_grade_to_sign(150), m_grade_to_exec(150) {}
 
-Form::Form(std::string name, const int grade_to_sign, const int grade_to_exec) : m_name(name), m_signed(false), m_grade_to_sign(grade_to_sign), m_grade_to_exec(grade_to_exec) {
+AForm::AForm(std::string name, const int grade_to_sign, const int grade_to_exec) : m_name(name), m_signed(false), m_grade_to_sign(grade_to_sign), m_grade_to_exec(grade_to_exec) {
 	if (grade_to_sign < 1 || grade_to_exec < 1)
-		throw Form::GradeTooHighException();
+		throw AForm::GradeTooHighException();
 	else if (grade_to_sign > 150 || grade_to_exec > 150)
-		throw Form::GradeTooLowException();}
+		throw AForm::GradeTooLowException();}
 
-Form::Form(const Form &src) : m_name(src.m_name), m_signed(src.m_signed), m_grade_to_sign(src.m_grade_to_sign), m_grade_to_exec(src.m_grade_to_exec) {
+AForm::AForm(const AForm &src) : m_name(src.m_name), m_signed(src.m_signed), m_grade_to_sign(src.m_grade_to_sign), m_grade_to_exec(src.m_grade_to_exec) {
 	*this = src;}
 
 /* -----------------DESTRUCTOR-----------------*/
-Form::~Form() {}
+AForm::~AForm() {}
 
 /* -----------------OPERATOR-----------------*/
-Form & Form::operator= (const Form &rhs) {
+AForm & AForm::operator= (const AForm &rhs) {
 	if (this != &rhs)
 		m_signed = rhs.m_signed;
 	return *this;}
 
 /* -----------------METHOD-----------------*/
-void Form::beSigned(const Bureaucrat &b) {
+void AForm::beSigned(const Bureaucrat &b) {
 	if (b.getGrade() > m_grade_to_sign)
-		throw Form::GradeTooLowException();
+		throw AForm::GradeTooLowException();
 	m_signed = true;}
 
 /* -----------------GETTER-----------------*/
-std::string Form::getName() const {
+std::string AForm::getName() const {
 	return m_name;}
 
-bool Form::getSigned() const{
+bool AForm::getSigned() const{
 	return m_signed;}
 
-int Form::getGradeToSign() const{
+int AForm::getGradeToSign() const{
 	return m_grade_to_sign;}
 
-int Form::getGradeToExec() const{
+int AForm::getGradeToExec() const{
 	return m_grade_to_exec;}
 
 /* -----------------OTHER-----------------*/
-std::ostream& operator << (std::ostream &out, const Form &rhs){
+std::ostream& operator << (std::ostream &out, const AForm &rhs){
 	out << rhs.getName() << (rhs.getSigned() ? " is signed." : " is not signed.") << std::endl
 		<< "Grade " << rhs.getGradeToSign() << " required to sign " << rhs.getName() << std::endl
 		<< "Grade " << rhs.getGradeToExec() << " required to execute " << rhs.getName() << std::endl;

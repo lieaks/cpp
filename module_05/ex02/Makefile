@@ -1,4 +1,4 @@
-SRCS= main.cpp Bureaucrat.cpp Form.cpp
+SRCS= main.cpp Bureaucrat.cpp AForm.cpp ShrubberyCreationForm.cpp RobotomyRequestForm.cpp PresidentialPardonForm.cpp
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 
@@ -26,7 +26,10 @@ fclean: clean
 
 re: fclean all
 
-leak: $(NAME)
-	make && valgrind --leak-check=full --show-leak-kinds=all ./$(NAME)
+mac: $(NAME)
+	make && ./$(NAME) && make fclean
 
-.PHONY: all clean fclean re 
+leak: $(NAME)
+	make && valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) && make fclean
+
+.PHONY: all clean fclean re mac leak 
