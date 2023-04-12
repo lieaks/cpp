@@ -4,20 +4,27 @@ Converter::Converter() {}
 
 Converter::Converter(std::string str) : m_str(str) {}
 
-Converter::Converter(const Converter &) {}
+Converter::Converter(const Converter &src) : m_str(src.m_str) {}
 
 Converter::~Converter() {}
 
-Converter & Converter::operator= (const Converter &) {return *this;}
+Converter & Converter::operator= (const Converter &rhs) {
+	if (this != &rhs){
+		m_str = rhs.m_str;
+	}
+	
+	return *this;}
 
 void Converter::getType () {
 	e_type type[] = {CHAR, INT, FLOAT, DOUBLE};
-	bool func[] = {&Converter::isChar, &Converter::isInt, &Converter::isFloat, &Converter::isDouble};
+	bool (Converter::*func[])() = {&Converter::isChar, &Converter::isInt, &Converter::isFloat, &Converter::isDouble};
 	for (int i = 0; i < 4; i++)
 	{
-		if (func[i] == true){
+		if ((this->*func[i])() == true){
 			m_type = type[i];
 			break ;} 
+		if (i == 3)
+			m_type = NONE;
 	};}
 
 bool Converter::isChar() {
@@ -33,7 +40,7 @@ bool Converter::isFloat() {
 	char *endptr = NULL;
 
 	std::strtof(m_str.c_str(), &endptr);
-	return (endptr == &m_str[0] + m_str.length()); };
+	return (*endptr == 'f' && (endptr == &m_str[0] + m_str.length()) + 1); };
 
 bool Converter::isDouble() {
 	char *endptr = NULL;
@@ -43,7 +50,7 @@ bool Converter::isDouble() {
 
 void Converter::convert() {
 	e_type type[] = {CHAR, INT, FLOAT, DOUBLE};
-	void (Converter::*func[])() = {&Converter::printChar, &Converter::printInt};
+	void (Converter::*func[])() = {&Converter::printChar, &Converter::printInt, &Converter::printFloat, &Converter::printDouble};
 
 	getType();
 	for (int i = 0; i < 4; i++)
@@ -53,6 +60,8 @@ void Converter::convert() {
 			(this->*func[i])();
 			break ;
 		}
+		if (i == 3)
+			std::cout << "Unknow type" << std::endl;
 	}
 }
 
@@ -113,4 +122,7 @@ void Converter::printDouble() {
 	else
 		std::cout << "int: " << static_cast<int>(d) << std::endl;
 	std::cout << "float: " << static_cast<float>(d) << "f" << std::endl;
-	std::cout << "double: " << d << std::endl;}
+	if (d - static_cast<int>(d) == 0)
+		std::cout << "double: " << d << ".0" << std::endl;
+	else
+		std::cout << "double: " << d << std::endl;}

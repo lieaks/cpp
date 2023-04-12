@@ -10,7 +10,6 @@ enum e_type {
 	INT,
 	FLOAT,
 	DOUBLE,
-	LITTERAL,
 	NONE
 };
 
@@ -18,7 +17,7 @@ class Converter
 {
 public:
 	Converter(std::string str);
-	Converter(const Converter &);
+	Converter(const Converter &rhs);
 	~Converter();
 	Converter &operator=(const Converter &);
 
