@@ -23,10 +23,10 @@ Bureaucrat &Bureaucrat::operator = (const Bureaucrat &rhs) {
 /* -----------------SETTER-----------------*/
 void Bureaucrat::setGrade(int grade) {
 	if (grade < 1){
-		throw Bureaucrat::GradeTooLowException();
+		throw Bureaucrat::GradeTooHighException();
 	}
 	else if (grade > 150){
-		throw Bureaucrat::GradeTooHighException();
+		throw Bureaucrat::GradeTooLowException();
 	}
 	else
 		m_grade = grade;}
