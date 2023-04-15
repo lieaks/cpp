@@ -1,4 +1,4 @@
-SRCS= main.cpp 
+SRCS= main.cpp BitcoinExchange.cpp
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 
@@ -9,7 +9,7 @@ CXXFLAGS += -MMD
 # CFLAGS += -fsanitize=address
 INCLUDE = -I. 
 
-NAME = mutantstack
+NAME = btc
 
 all: $(NAME)
 
