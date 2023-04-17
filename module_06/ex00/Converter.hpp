@@ -4,40 +4,31 @@
 #include <string>
 #include <iostream>
 #include <cmath>
-
-enum e_type {
-	CHAR,
-	INT,
-	FLOAT,
-	DOUBLE,
-	NONE
-};
+#include <climits>
+#include <cstdlib>
 
 class Converter
 {
 public:
-	Converter(std::string str);
-	Converter(const Converter &rhs);
 	~Converter();
-	Converter &operator=(const Converter &);
 
-	void getType();
-	bool isChar();
-	bool isInt();
-	bool isFloat();
-	bool isDouble();
-	bool isLitteral();
+	static void convert(std::string str);
 
-	void convert();
-	void printChar();
-	void printInt();
-	void printFloat();
-	void printDouble();
+	static bool isChar(std::string str);
+	static bool isInt(std::string str);
+	static bool isFloat(std::string str);
+	static bool isDouble(std::string str);
+	static bool isLitteral(std::string str);
+
+	static void printChar(char c);
+	static void printInt(long n);
+	static void printFloat(float f);
+	static void printDouble(double d);
 
 private:
 	Converter();
-	std::string m_str;
-	e_type m_type;
+	Converter(const Converter &);
+	Converter &operator=(const Converter &);
 };
 
 #endif //CONVERTER_HPP

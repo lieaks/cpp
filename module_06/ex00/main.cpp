@@ -7,7 +7,6 @@ int main(int ac, char **av)
 		std::cout << "Usage: ./convert <input>" << std::endl;
 		return 1;
 	}
-	Converter converter(av[1]);
-	converter.convert();
+	Converter::convert(av[1]);
 	return 0;
 }

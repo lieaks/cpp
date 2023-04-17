@@ -2,72 +2,46 @@
 
 Converter::Converter() {}
 
-Converter::Converter(std::string str) : m_str(str) {}
-
-Converter::Converter(const Converter &src) : m_str(src.m_str) {}
+Converter::Converter(const Converter &) {}
 
 Converter::~Converter() {}
 
-Converter & Converter::operator= (const Converter &rhs) {
-	if (this != &rhs){
-		m_str = rhs.m_str;
-	}
-	
-	return *this;}
+Converter & Converter::operator= (const Converter &) {return *this;}
 
-void Converter::getType () {
-	e_type type[] = {CHAR, INT, FLOAT, DOUBLE};
-	bool (Converter::*func[])() = {&Converter::isChar, &Converter::isInt, &Converter::isFloat, &Converter::isDouble};
-	for (int i = 0; i < 4; i++)
-	{
-		if ((this->*func[i])() == true){
-			m_type = type[i];
-			break ;} 
-		if (i == 3)
-			m_type = NONE;
-	};}
+bool Converter::isChar(std::string str) {
+	return (str.length() == 1 && std::isprint(str[0]) && std::isalpha(str[0])); };
 
-bool Converter::isChar() {
-	return (m_str.length() == 1 && std::isprint(m_str[0]) && std::isalpha(m_str[0])); };
-
-bool Converter::isInt() {
+bool Converter::isInt(std::string str) {
 	char *endptr = NULL;
 
-	std::strtol(m_str.c_str(), &endptr, 10);
-	return (endptr == &m_str[0] + m_str.length()); };
+	std::strtol(str.c_str(), &endptr, 10);
+	return (endptr == &str[0] + str.length()); };
 
-bool Converter::isFloat() {
+bool Converter::isFloat(std::string str) {
 	char *endptr = NULL;
 
-	std::strtof(m_str.c_str(), &endptr);
-	return (*endptr == 'f' && (endptr == &m_str[0] + m_str.length()) + 1); };
+	std::strtof(str.c_str(), &endptr);
+	return (*endptr == 'f' && (endptr == &str[0] + str.length()) + 1); };
 
-bool Converter::isDouble() {
+bool Converter::isDouble(std::string str) {
 	char *endptr = NULL;
 
-	std::strtod(m_str.c_str(), &endptr);
-	return (endptr == &m_str[0] + m_str.length()); };
+	std::strtod(str.c_str(), &endptr);
+	return (endptr == &str[0] + str.length()); };
 
-void Converter::convert() {
-	e_type type[] = {CHAR, INT, FLOAT, DOUBLE};
-	void (Converter::*func[])() = {&Converter::printChar, &Converter::printInt, &Converter::printFloat, &Converter::printDouble};
+void Converter::convert(std::string str) {
+	if (isChar(str))
+		printChar(str[0]);
+	else if (isInt(str))
+		printInt(std::atol(str.c_str()));
+	else if (isFloat(str))
+		printFloat(std::strtof(str.c_str(), NULL));
+	else if (isDouble(str))
+		printDouble(std::strtod(str.c_str(), NULL));
+	else
+		std::cout << "Unknow type" << std::endl; }
 
-	getType();
-	for (int i = 0; i < 4; i++)
-	{
-		if (m_type == type[i])
-		{
-			(this->*func[i])();
-			break ;
-		}
-		if (i == 3)
-			std::cout << "Unknow type" << std::endl;
-	}
-}
-
-void Converter::printChar(){
-	char c = m_str[0];
-
+void Converter::printChar(char c){
 	if (std::isprint(c))
 		std::cout << "char: '" << c << "'" << std::endl;
 	else
@@ -76,9 +50,7 @@ void Converter::printChar(){
 	std::cout << "float: " << static_cast<float>(c) << "f" << std::endl;
 	std::cout << "double: " << static_cast<double>(c) << std::endl;}
 
-void Converter::printInt(){
-	long n = std::atol(m_str.c_str());
-
+void Converter::printInt(long n){
 	char c = static_cast<char>(n);
 	if (c < CHAR_MIN || c > CHAR_MAX)
 		std::cout << "char: impossible" << std::endl;
@@ -90,9 +62,7 @@ void Converter::printInt(){
 	std::cout << "float: " << static_cast<float>(n) << "f" << std::endl;
 	std::cout << "double: " << static_cast<double>(n) << std::endl;}
 
-void Converter::printFloat() {
-	float f = std::strtof(m_str.c_str(), NULL);
-
+void Converter::printFloat(float f) {
 	char c = static_cast<char>(f);
 	if (f < CHAR_MIN || f > CHAR_MAX || std::isnan(f) || std::isinf(f))
 		std::cout << "char: impossible" << std::endl;
@@ -100,16 +70,14 @@ void Converter::printFloat() {
 		std::cout << "char: Non displayable" << std::endl;
 	else
 		std::cout << "char: '" << c << "'" << std::endl;
-	if (f < INT_MIN || f > INT_MAX || std::isnan(f) || std::isinf(f))
+	if (f < static_cast<float>(INT_MIN) || f > static_cast<float>(INT_MAX) || std::isnan(f) || std::isinf(f))
 		std::cout << "int: impossible" << std::endl;
 	else
 		std::cout << "int: " << static_cast<int>(f) << std::endl;
 	std::cout << "float: " << f << "f" << std::endl;
 	std::cout << "double: " << static_cast<double>(f) << std::endl;}
 
-void Converter::printDouble() {
-	double d = std::strtod(m_str.c_str(), NULL);
-
+void Converter::printDouble(double d) {
 	char c = static_cast<char>(d);
 	if (d < CHAR_MIN || d > CHAR_MAX || std::isnan(d) || std::isinf(d))
 		std::cout << "char: impossible" << std::endl;
