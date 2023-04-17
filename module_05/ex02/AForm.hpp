@@ -35,6 +35,10 @@ public:
 		public:
 		virtual const char* what() const throw() {return "Form not signed";}
 	};
+	class ErrorOpen : public std::exception {
+		public:
+		virtual const char* what() const throw() {return "File open error";}
+	};
 
 private:
 	AForm();

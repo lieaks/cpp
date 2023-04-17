@@ -11,6 +11,7 @@ public:
 	~ShrubberyCreationForm();
 	ShrubberyCreationForm &operator=(const ShrubberyCreationForm &rhs);
 	virtual void execute(Bureaucrat const & executor) const;
+	std::string getTarget() const;
 
 private:
 	ShrubberyCreationForm();
