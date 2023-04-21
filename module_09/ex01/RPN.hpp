@@ -4,12 +4,17 @@
 #include <string>
 #include <stack>
 #include <iostream>
+#include <cstdlib>
 
 class RPN
 {
 public:
 	~RPN();
 	static long Convert(std::string str);
+	class ParseException : public std::exception {
+		public:
+		virtual const char* what() const throw() {return "Error";}; 
+	};
 
 private:
 	RPN();

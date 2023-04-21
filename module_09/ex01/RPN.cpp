@@ -17,10 +17,10 @@ long RPN::Convert(std::string str) {
 		if (str[i] == '(' || str[i] == ')') 
 		{
 			std::cerr << "Error" << std::endl;
-			exit (1);
+			throw ParseException();
 		}
 		if (isdigit(str[i]))
-			stack.push(std::atoi(&str[i]));
+			stack.push(atoi(&str[i]));
 		else if (isoperatorsign(str[i]))
 		{
 			if (stack.size() < 2)

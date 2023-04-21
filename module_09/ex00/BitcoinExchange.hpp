@@ -7,6 +7,8 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <climits>
+#include <cstdlib>
 
 struct Data
 {

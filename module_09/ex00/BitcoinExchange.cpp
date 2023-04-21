@@ -4,7 +4,7 @@ std::vector<Data> BitcoinExchange::getData() const{
 	return m_data; }
 
 void BitcoinExchange::setData(std::string filename) {
-	std::ifstream file(filename);
+	std::ifstream file(filename.c_str());
 	if (!file.is_open())
 		throw ErrorOpenException();
 
@@ -50,14 +50,13 @@ void printDate(Data data)
 }
 
 void BitcoinExchange::exchange(std::string inputname) {
-	std::ifstream file(inputname);
+	std::ifstream file(inputname.c_str());
 	if (!file.is_open())
 		throw ErrorOpenException();
 	std::string line;
 	std::string buffer;
 	Data data;
 	std::vector<Data>::iterator it = m_data.begin();
-
 	while (getline(file, line))
 	{
 		if (isdigit(line[0]))
