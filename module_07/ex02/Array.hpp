@@ -4,12 +4,11 @@ template <typename T>
 class Array
 {
 public:
-	Array() : m_array(new T()), m_size(0) {};
+	Array() : m_array(new T[0]()), m_size(0) {};
 	Array(unsigned int n) : m_array(new T[n]()), m_size(n) {};
 	Array(const Array &src) : m_array(new T[src.size()]()), m_size(src.size()) {
 		*this = src;};
-	// ~Array() { delete[] m_array; };
-	~Array() { if (m_size > 0) {delete[] m_array;} else {delete m_array;} };
+	~Array() { delete[] m_array; };
 	Array & operator=(const Array &rhs) {
 		if (this != &rhs){
 			delete[] m_array;
