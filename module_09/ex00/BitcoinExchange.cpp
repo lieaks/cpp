@@ -1,18 +1,24 @@
 #include "BitcoinExchange.hpp"
 
-std::vector<Data> BitcoinExchange::getData() const{
+std::map<std::string, float> BitcoinExchange::getData() const{
 	return m_data; }
 
-void BitcoinExchange::setData(std::string filename) {
+void BitcoinExchange::parseDatabase(std::string filename) {
 	std::ifstream file(filename.c_str());
 	if (!file.is_open())
 		throw ErrorOpenException();
-
+		
 	std::string line;
 	Data data;
 	std::string buffer;
+	getline(file, line);
+	if (line.compare("date,exchange_rate"))
+			throw CustomException("First line must be \"date,exchange_rate\"");
 	while (getline(file, line))
 	{
+		if (line.size() < 12)
+			throw CustomException("Data must have <Year-Month-Day,prices>");
+		else if (atoi(line.))
 		if (isdigit(line[0])){
 			data = setDate(line);
 			buffer = line.substr(11, line.size() - 11);
