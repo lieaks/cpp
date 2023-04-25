@@ -9,6 +9,7 @@
 #include <iostream>
 #include <climits>
 #include <cstdlib>
+#include <float.h>
 
 struct Data
 {
@@ -24,6 +25,8 @@ public:
 	// BitcoinExchange(const BitcoinExchange &);
 	// ~BitcoinExchange();
 	// BitcoinExchange & operator = (const BitcoinExchange &);
+	bool isValidDate(std::string line);
+	bool isValidValue(std::string line);
 	void parseDatabase(std::string filename);
 	void exchange(std::string inputname);
 	std::map<std::string, float> getData() const;
@@ -33,10 +36,10 @@ public:
 	};
 	class CustomException : public std::exception {
 		private:
-		const char* m_message;
+			const char* m_message;
 		public:
-		CustomException(char * message) : m_message(message) {};
-		virtual const char* what() {return m_message;};
+			CustomException(char * message) : m_message(message) {};
+			virtual const char* what() {return m_message;};
 	};
 private:
 	std::map<std::string, float> m_data;

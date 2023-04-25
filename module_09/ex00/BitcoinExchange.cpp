@@ -3,52 +3,75 @@
 std::map<std::string, float> BitcoinExchange::getData() const{
 	return m_data; }
 
+bool BitcoinExchange::isValidDate(std::string line) {
+	return (not (line.size() != 10 || line[4] != '-' || line[7] != '-' 
+		|| atol(line.c_str()) < 2009 || atol(line.c_str()) > 2023
+		|| atol(line.c_str() + 5) < 1 || atol(line.c_str() + 5) > 12
+		|| atol(line.c_str() + 8) < 1 || atol(line.c_str() + 8) > 31));
+}
+
+bool BitcoinExchange::isValidValue(std::string line) {
+	if (line.size() == 0)
+		return false;
+	if (line.find(".") != line.rfind("."))
+		return false;
+	for (size_t i = 0; i < line.size(); i++){
+		if (isdigit(line[i]) || line[i] == '.')
+			continue;
+		else
+			return false;
+	}
+	if (strtof(line.c_str(), NULL) > FLT_MAX)
+		return false;
+	return true;
+}
+
 void BitcoinExchange::parseDatabase(std::string filename) {
 	std::ifstream file(filename.c_str());
 	if (!file.is_open())
 		throw ErrorOpenException();
 		
-	std::string line;
+	std::string line, date;
+
 	Data data;
 	std::string buffer;
 	getline(file, line);
 	if (line.compare("date,exchange_rate"))
 			throw CustomException("First line must be \"date,exchange_rate\"");
-	while (getline(file, line))
+	while (getline(file, line, ','))
 	{
-		if (line.size() < 12)
-			throw CustomException("Data must have <Year-Month-Day,prices>");
-		else if (atol(line.c_str()) < 2009 || atol(line.c_str()) > 2022)
-		if (isdigit(line[0])){
-			data = setDate(line);
-			buffer = line.substr(11, line.size() - 11);
-			data.price = strtof(buffer.c_str(), NULL);
-			data.len_price = buffer.size();
-			m_data.push_back(data);
-		}
+		if (!isValidDate(line))
+			throw CustomException("Invalid date");
+		date = line;
+		getline(file, line);
+		if (m_data.find(date) != m_data.end())
+			throw CustomException("Duplicate date in the database");
+		if (!isValidValue(line))
+			throw CustomException("Invalid date");
+		m_data.insert(std::make_pair(date, strtof(line.c_str(), NULL)));
 	}
 	file.close();
 }
 
-Data setDate(std::string line)
-{
-	std::string buffer;
-	Data data;
-	buffer = line.substr(0, 4);
-	data.time.tm_year = atoi(buffer.c_str());
-	buffer = line.substr(5, 2);
-	data.time.tm_mon = atoi(buffer.c_str());
-	buffer = line.substr(8, 2);
-	data.time.tm_mday = atoi(buffer.c_str());
-	return data;
-}
+// Data setDate(std::string line)
+// {
+// 	std::string buffer;
+// 	Data data;
+// 	buffer = line.substr(0, 4);
+// 	data.time.tm_year = atoi(buffer.c_str());
+// 	buffer = line.substr(5, 2);
+// 	data.time.tm_mon = atoi(buffer.c_str());
+// 	buffer = line.substr(8, 2);
+// 	data.time.tm_mday = atoi(buffer.c_str());
+// 	return data;
+// }
 
-bool isNotValidDate(Data data)
-{
-	if (data.time.tm_mon < 1 || data.time.tm_mon > 12 || data.time.tm_mday < 1 || data.time.tm_mday > 31)
-		return 1;
-	return 0;
-}
+// bool isNotValidDate(Data data)
+// {
+// 	if (data.time.tm_mon < 1 || data.time.tm_mon > 12 || data.time.tm_mday < 1 || data.time.tm_mday > 31)
+// 		return 1;
+// 	return 0;
+// }
 
 void printDate(Data data)
 {

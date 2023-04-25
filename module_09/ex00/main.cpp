@@ -3,17 +3,18 @@
 
 int main(int ac, char **av)
 {
+	(void)av;
 	if (ac != 2)
 	{
 		std::cout << "Usage: ./btc <input file>" << std::endl;
 		return 1;
 	}
 	BitcoinExchange btc;
-	std::vector<Data> data;
-	std::vector<Data>::iterator it;
+	std::map<std::string, float> data;
+	std::map<std::string, float>::iterator it;
 	try{
-		btc.setData("data.csv");
-		btc.exchange(av[1]);
+		btc.parseDatabase("data.csv");
+		// btc.exchange(av[1]);
 	}
 	catch (const std::exception &e){
 		std::cerr << e.what() << std::endl;
