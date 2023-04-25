@@ -2,15 +2,22 @@
 
 #include <iostream>
 
-template <typename R, typename T>
-void iter(R *array, size_t size, void (*f)(T &))
+template <typename R, typename T, typename F>
+void iter(R *array, size_t size, F (*f)(T const &))
 {
 	for (size_t i = 0; i < size; i++)
 		f(array[i]);
 }
 
-template <typename T>
-void print(T &a)
+template <typename R, typename T, typename F>
+void iter(R *array, size_t size, F (*f)(T &))
 {
-	std::cout << a << std::endl;
+	for (size_t i = 0; i < size; i++)
+		f(array[i]);
 }
+
+// template <typename T>
+// void print(T &a)
+// {
+// 	std::cout << a << std::endl;
+// }
