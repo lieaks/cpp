@@ -1,6 +1,7 @@
 #include "Span.hpp"
 
 int main() {
+  try {
   Span sp = Span(5);
   sp.addNumber(6);
   sp.addNumber(3);
@@ -10,11 +11,10 @@ int main() {
   std::cout << sp.shortestSpan() << std::endl;
   std::cout << sp.longestSpan() << std::endl;
 
-  Span vec = Span(100);
-  std::vector<int> copy(100, 42);
+  Span vec = Span(20000);
+  std::vector<int> copy(20000, 42);
   copy[42] = 40;
-  try {
-  
+  copy[19000] = 200;
   vec.addNumber(copy.begin() , copy.end());
   std::cout << vec.shortestSpan() << std::endl;
   std::cout << vec.longestSpan() << std::endl;
