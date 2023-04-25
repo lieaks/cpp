@@ -18,7 +18,7 @@ void BitcoinExchange::parseDatabase(std::string filename) {
 	{
 		if (line.size() < 12)
 			throw CustomException("Data must have <Year-Month-Day,prices>");
-		else if (atoi(line.))
+		else if (atol(line.c_str()) < 2009 || atol(line.c_str()) > 2022)
 		if (isdigit(line[0])){
 			data = setDate(line);
 			buffer = line.substr(11, line.size() - 11);
