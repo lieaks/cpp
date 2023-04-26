@@ -38,7 +38,7 @@ public:
 		private:
 			const char* m_message;
 		public:
-			CustomException(char * message) : m_message(message) {};
+			CustomException(const char * message) : m_message(message) {};
 			virtual const char* what() {return m_message;};
 	};
 private:

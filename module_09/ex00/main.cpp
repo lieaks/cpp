@@ -14,7 +14,7 @@ int main(int ac, char **av)
 	std::map<std::string, float>::iterator it;
 	try{
 		btc.parseDatabase("data.csv");
-		// btc.exchange(av[1]);
+		btc.exchange(av[1]);
 	}
 	catch (const std::exception &e){
 		std::cerr << e.what() << std::endl;

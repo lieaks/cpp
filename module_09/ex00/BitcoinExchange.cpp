@@ -27,14 +27,11 @@ bool BitcoinExchange::isValidValue(std::string line) {
 }
 
 void BitcoinExchange::parseDatabase(std::string filename) {
+	std::string line, date;
+
 	std::ifstream file(filename.c_str());
 	if (!file.is_open())
 		throw ErrorOpenException();
-		
-	std::string line, date;
-
-	Data data;
-	std::string buffer;
 	getline(file, line);
 	if (line.compare("date,exchange_rate"))
 			throw CustomException("First line must be \"date,exchange_rate\"");
@@ -82,35 +79,69 @@ void BitcoinExchange::exchange(std::string inputname) {
 	std::ifstream file(inputname.c_str());
 	if (!file.is_open())
 		throw ErrorOpenException();
-	std::string line;
-	std::string buffer;
-	Data data;
-	std::vector<Data>::iterator it = m_data.begin();
-	while (getline(file, line))
+	std::string line, date;
+	std::string buffer_error;
+	// std::vector<Data>::iterator it = m_data.begin();
+	getline(file, line);
+	if (line.compare("date | value"))
+			throw CustomException("First line must be \"date | value\"");
+	while (getline(file, line, ' '))
 	{
-		if (isdigit(line[0]))
-		{
-			data = setDate(line);
-			if (isNotValidDate(data))
-				std::cout << "Error: bad input => " << line.substr(0, 10) << std::endl;
-			else{
-				while (it->time.tm_year < data.time.tm_year && it != m_data.end())
-					it++;
-				while (it->time.tm_year <= data.time.tm_year && it->time.tm_mon < data.time.tm_mon && it != m_data.end())
-					it++;
-				while (it->time.tm_year <= data.time.tm_year && it->time.tm_mon <= data.time.tm_mon
-						&& it->time.tm_mday < data.time.tm_mday && it != m_data.end()
-						&& (it + 1)->time.tm_mday <= data.time.tm_mday)
-					it++;
-				buffer = line.substr(13, line.size() - 13);
-				if (atol(buffer.c_str()) < 0)
-					std::cout << "Error: not a positive number." << std::endl;
-				else if (atol(buffer.c_str()) > INT_MAX)
-					std::cout << "Error: too large a number." << std::endl;
-				else{
-					std::cout << line.substr(0, 10) << " => " << buffer << " = " << it->price * strtof(buffer.c_str(), NULL) << std::endl;
-				}
+		try {
+			if (!isValidDate(line)){
+				buffer_error = "Error: bad input => " + line; // potential segfault
+				throw CustomException(buffer_error.c_str());
 			}
+			date = line;
+			getline(file, line);
+			if (line.compare(0, 3, "| "))
+				throw CustomException("Error: bad format");
+			line.erase(0, 3);
+			if (!isValidValue(line))
+				throw CustomException("Error: bad format");
+				
+			std::map<std::string, float>::iterator it = m_data.find(date);
+			if (it == m_data.end())
+				it = m_data.lower_bound(date);
+			if (it != m_data.begin())
+				it--;
+			
+			float value = strtof(line.c_str(), NULL);
+			if (value < 0)
+				throw CustomException("Error: not a positive number.");
+			if (value > 1000)
+				throw CustomException("Error: number too high");
+			if (it == m_data.end())
+				throw CustomException("Error: date too recent");
+			std::cout << date << " => "	<< line << " = " << value * it->second << std::endl;
+
+
+		// if (isdigit(line[0]))
+		// {
+		// 	data = setDate(line);
+		// 	if (isNotValidDate(data))
+		// 		std::cout << "Error: bad input => " << line.substr(0, 10) << std::endl;
+		// 	else{
+		// 		while (it->time.tm_year < data.time.tm_year && it != m_data.end())
+		// 			it++;
+		// 		while (it->time.tm_year <= data.time.tm_year && it->time.tm_mon < data.time.tm_mon && it != m_data.end())
+		// 			it++;
+		// 		while (it->time.tm_year <= data.time.tm_year && it->time.tm_mon <= data.time.tm_mon
+		// 				&& it->time.tm_mday < data.time.tm_mday && it != m_data.end()
+		// 				&& (it + 1)->time.tm_mday <= data.time.tm_mday)
+		// 			it++;
+		// 		buffer = line.substr(13, line.size() - 13);
+		// 		if (atol(buffer.c_str()) < 0)
+		// 			std::cout << "Error: not a positive number." << std::endl;
+		// 		else if (atol(buffer.c_str()) > INT_MAX)
+		// 			std::cout << "Error: too large a number." << std::endl;
+		// 		else{
+		// 			std::cout << line.substr(0, 10) << " => " << buffer << " = " << it->price * strtof(buffer.c_str(), NULL) << std::endl;
+		// 		}
+		}
+		catch (std::exception &e) {
+			std::cerr << e.what() << std::endl;		
+		}
 		}
 	}
 }

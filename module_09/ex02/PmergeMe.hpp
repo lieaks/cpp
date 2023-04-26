@@ -5,4 +5,9 @@
 
 #include <iostream>
 
+class PmergeMe
+{
+	
+};
+
 #endif //PMERGEME_HPP 
