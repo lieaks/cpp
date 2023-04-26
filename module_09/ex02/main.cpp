@@ -7,6 +7,5 @@ int main (int ac, char **av)
 		std::cout << "Usage: ./PmergeMe <positive integer sequence as argument> " << std::endl;
 		return 1;
 	}
-	mergesort()
 	return 0;
 }

@@ -21,6 +21,6 @@ int main(int ac, char **av)
 	}
 	// data = btc.getData();
 	// for (it = data.begin(); it != data.end(); it++)
-		// std::cout << it->time.tm_year << "-" << it->time.tm_mon << "-" << it->time.tm_mday << "," << it->price << std::endl;
+	// 	std::cout << it->first << "," << it->second << std::endl;
 	return 0;
 }

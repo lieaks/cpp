@@ -30,6 +30,7 @@ public:
 	void parseDatabase(std::string filename);
 	void exchange(std::string inputname);
 	std::map<std::string, float> getData() const;
+
 	class ErrorOpenException : public std::exception {
 		public:
 		virtual const char* what() const throw() {return "Error: open file failed";};
@@ -39,7 +40,7 @@ public:
 			const char* m_message;
 		public:
 			CustomException(const char * message) : m_message(message) {};
-			virtual const char* what() {return m_message;};
+			virtual const char* what() const throw() {return m_message;};
 	};
 private:
 	std::map<std::string, float> m_data;

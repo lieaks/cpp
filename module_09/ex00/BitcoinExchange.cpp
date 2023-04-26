@@ -50,26 +50,6 @@ void BitcoinExchange::parseDatabase(std::string filename) {
 	file.close();
 }
 
-// Data setDate(std::string line)
-// {
-// 	std::string buffer;
-// 	Data data;
-// 	buffer = line.substr(0, 4);
-// 	data.time.tm_year = atoi(buffer.c_str());
-// 	buffer = line.substr(5, 2);
-// 	data.time.tm_mon = atoi(buffer.c_str());
-// 	buffer = line.substr(8, 2);
-// 	data.time.tm_mday = atoi(buffer.c_str());
-// 	return data;
-// }
-
-// bool isNotValidDate(Data data)
-// {
-// 	if (data.time.tm_mon < 1 || data.time.tm_mon > 12 || data.time.tm_mday < 1 || data.time.tm_mday > 31)
-// 		return 1;
-// 	return 0;
-// }
-
 void printDate(Data data)
 {
 		std::cout << data.time.tm_year << "-" << data.time.tm_mon << "-" << data.time.tm_mday << std::endl;
@@ -79,69 +59,48 @@ void BitcoinExchange::exchange(std::string inputname) {
 	std::ifstream file(inputname.c_str());
 	if (!file.is_open())
 		throw ErrorOpenException();
+
 	std::string line, date;
-	std::string buffer_error;
-	// std::vector<Data>::iterator it = m_data.begin();
+	std::string buffer_error, buffer_value;
+
 	getline(file, line);
 	if (line.compare("date | value"))
 			throw CustomException("First line must be \"date | value\"");
-	while (getline(file, line, ' '))
+	while (getline(file, line))
 	{
 		try {
-			if (!isValidDate(line)){
+			if (line.size() < 10)
+				throw CustomException("Error: bad format.");
+			if (!isValidDate(line.substr(0, 10))){
 				buffer_error = "Error: bad input => " + line; // potential segfault
 				throw CustomException(buffer_error.c_str());
 			}
-			date = line;
-			getline(file, line);
-			if (line.compare(0, 3, "| "))
-				throw CustomException("Error: bad format");
+			date = line.substr(0, 10);
+			line.erase(0, 10);
+			if (line.compare(0, 3, " | "))
+				throw CustomException("Error: bad format.");
 			line.erase(0, 3);
-			if (!isValidValue(line))
-				throw CustomException("Error: bad format");
-				
+
 			std::map<std::string, float>::iterator it = m_data.find(date);
 			if (it == m_data.end())
+			{
 				it = m_data.lower_bound(date);
-			if (it != m_data.begin())
-				it--;
-			
+				if (it != m_data.begin() && it != m_data.end())
+					it--;
+			}
 			float value = strtof(line.c_str(), NULL);
 			if (value < 0)
 				throw CustomException("Error: not a positive number.");
 			if (value > 1000)
-				throw CustomException("Error: number too high");
+				throw CustomException("Error: too large number.");
 			if (it == m_data.end())
-				throw CustomException("Error: date too recent");
+				throw CustomException("Error: date too recent.");
+			if (!isValidValue(line))
+				throw CustomException("Error: bad format.");
 			std::cout << date << " => "	<< line << " = " << value * it->second << std::endl;
-
-
-		// if (isdigit(line[0]))
-		// {
-		// 	data = setDate(line);
-		// 	if (isNotValidDate(data))
-		// 		std::cout << "Error: bad input => " << line.substr(0, 10) << std::endl;
-		// 	else{
-		// 		while (it->time.tm_year < data.time.tm_year && it != m_data.end())
-		// 			it++;
-		// 		while (it->time.tm_year <= data.time.tm_year && it->time.tm_mon < data.time.tm_mon && it != m_data.end())
-		// 			it++;
-		// 		while (it->time.tm_year <= data.time.tm_year && it->time.tm_mon <= data.time.tm_mon
-		// 				&& it->time.tm_mday < data.time.tm_mday && it != m_data.end()
-		// 				&& (it + 1)->time.tm_mday <= data.time.tm_mday)
-		// 			it++;
-		// 		buffer = line.substr(13, line.size() - 13);
-		// 		if (atol(buffer.c_str()) < 0)
-		// 			std::cout << "Error: not a positive number." << std::endl;
-		// 		else if (atol(buffer.c_str()) > INT_MAX)
-		// 			std::cout << "Error: too large a number." << std::endl;
-		// 		else{
-		// 			std::cout << line.substr(0, 10) << " => " << buffer << " = " << it->price * strtof(buffer.c_str(), NULL) << std::endl;
-		// 		}
 		}
 		catch (std::exception &e) {
 			std::cerr << e.what() << std::endl;		
-		}
 		}
 	}
 }

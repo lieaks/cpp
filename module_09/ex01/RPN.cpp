@@ -11,6 +11,7 @@ RPN & RPN::operator = (const RPN &) {return *this;}
 long RPN::Convert(std::string str) {
 	std::stack<long> stack;
 	long tmp = 0, res = 0;
+	char digit;
 
 	for (int i = 0; str[i]; i++)
 	{
@@ -20,7 +21,10 @@ long RPN::Convert(std::string str) {
 			throw ParseException();
 		}
 		if (isdigit(str[i]))
-			stack.push(atoi(&str[i]));
+		{
+			digit = str[i];
+			stack.push(atoi(&digit));
+		}
 		else if (isoperatorsign(str[i]))
 		{
 			if (stack.size() < 2)
