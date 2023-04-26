@@ -6,13 +6,18 @@
 #include <iostream>
 #include <vector>
 #include <deque>
+#include <algorithm>
 
 class PmergeMe
 {
 private:
-	PmergeMe();
+
 public:	
-	template <typename T> void insertion_sort(T& container);
+	PmergeMe();
+	// template <typename T> void insertion_sort(T& container);
+	// template <typename T> void sort(T& container);
 };
 
+	template <typename T> void insertion_sort(T& container);
+	template <typename T> void sort(T& container);
 #endif //PMERGEME_HPP 
