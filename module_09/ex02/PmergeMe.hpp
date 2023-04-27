@@ -11,13 +11,23 @@
 class PmergeMe
 {
 private:
+	PmergeMe(const PmergeMe &);
+	PmergeMe& operator = (const PmergeMe &);
 
 public:	
-	PmergeMe();
-	// template <typename T> void insertion_sort(T& container);
-	// template <typename T> void sort(T& container);
-};
+	PmergeMe(int ac, char **av);
+	~PmergeMe();
 
 	template <typename T> void insertion_sort(T& container);
-	template <typename T> void sort(T& container);
-#endif //PMERGEME_HPP 
+	template <typename T> T sort(T& container);
+	template <typename T> void printContainer(T& container);
+	void parse_arg(std::string av);
+	class CustomException : public std::exception {
+		private:
+			const char* m_message;
+		public:
+			CustomException(const char * message) : m_message(message) {};
+			virtual const char* what() const throw() {return m_message;};
+	};
+};
+#endif //PMERGEME_HPP
