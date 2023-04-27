@@ -90,6 +90,6 @@ void PmergeMe::parse_arg(std::string av) {
 		if (!isdigit(av[i]))
 			throw CustomException("Error");
 	};
-	if (atol(av.c_str()) > INT_MAX)
+	if (av.size() > 10 || atol(av.c_str()) > INT_MAX)
 		throw CustomException("Error");
 }
