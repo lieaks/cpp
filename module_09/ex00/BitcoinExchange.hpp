@@ -11,20 +11,12 @@
 #include <cstdlib>
 #include <float.h>
 
-struct Data
-{
-	tm time;
-	float price;
-	int len_price;
-};
-
 class BitcoinExchange
 {
 public:
-	// BitcoinExchange();
-	// BitcoinExchange(const BitcoinExchange &);
-	// ~BitcoinExchange();
-	// BitcoinExchange & operator = (const BitcoinExchange &);
+	BitcoinExchange(std::string input);
+	~BitcoinExchange();
+
 	bool isValidDate(std::string line);
 	bool isValidValue(std::string line);
 	void parseDatabase(std::string filename);
@@ -43,10 +35,11 @@ public:
 			virtual const char* what() const throw() {return m_message;};
 	};
 private:
+	BitcoinExchange();
+	BitcoinExchange(const BitcoinExchange &);
+	BitcoinExchange & operator = (const BitcoinExchange &);
+
 	std::map<std::string, float> m_data;
 };
-
-Data setDate(std::string line);
-void printDate(Data data);
 
 #endif //BITCOINEXCHANGE_HPP

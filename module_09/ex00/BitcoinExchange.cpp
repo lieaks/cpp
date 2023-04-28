@@ -1,5 +1,16 @@
 #include "BitcoinExchange.hpp"
 
+BitcoinExchange::BitcoinExchange(std::string input) {
+	parseDatabase("data.csv");
+	exchange(input);
+};
+
+BitcoinExchange::~BitcoinExchange() {};
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &) {};
+
+BitcoinExchange & BitcoinExchange::operator =(const BitcoinExchange &) {return *this;};
+
 std::map<std::string, float> BitcoinExchange::getData() const{
 	return m_data; }
 
@@ -50,11 +61,6 @@ void BitcoinExchange::parseDatabase(std::string filename) {
 	file.close();
 }
 
-void printDate(Data data)
-{
-		std::cout << data.time.tm_year << "-" << data.time.tm_mon << "-" << data.time.tm_mday << std::endl;
-}
-
 void BitcoinExchange::exchange(std::string inputname) {
 	std::ifstream file(inputname.c_str());
 	if (!file.is_open())
@@ -72,7 +78,7 @@ void BitcoinExchange::exchange(std::string inputname) {
 			if (line.size() < 10)
 				throw CustomException("Error: bad format.");
 			if (!isValidDate(line.substr(0, 10))){
-				buffer_error = "Error: bad input => " + line; // potential segfault
+				buffer_error = "Error: bad input => " + line;
 				throw CustomException(buffer_error.c_str());
 			}
 			date = line.substr(0, 10);
@@ -103,4 +109,5 @@ void BitcoinExchange::exchange(std::string inputname) {
 			std::cerr << e.what() << std::endl;		
 		}
 	}
+	file.close();
 }

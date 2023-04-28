@@ -8,12 +8,8 @@ int main(int ac, char **av)
 		std::cout << "Usage: ./btc <input file>" << std::endl;
 		return 1;
 	}
-	BitcoinExchange btc;
-	std::map<std::string, float> data;
-	std::map<std::string, float>::iterator it;
-	try{
-		btc.parseDatabase("data.csv");
-		btc.exchange(av[1]);
+	try {
+		BitcoinExchange btc(av[1]);
 	}
 	catch (const std::exception &e){
 		std::cerr << e.what() << std::endl;
