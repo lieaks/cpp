@@ -25,6 +25,6 @@ private:
 
 int parsearg(std::string str);
 bool isoperatorsign(const char c);
-long dooperation(long first, long second, char c);
+double dooperation(double first, double second, char c);
 
 #endif //RPN_HPP

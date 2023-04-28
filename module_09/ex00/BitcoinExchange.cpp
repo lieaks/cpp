@@ -55,7 +55,7 @@ void BitcoinExchange::parseDatabase(std::string filename) {
 		if (m_data.find(date) != m_data.end())
 			throw CustomException("Duplicate date in the database");
 		if (!isValidValue(line))
-			throw CustomException("Invalid date");
+			throw CustomException("Invalid value");
 		m_data.insert(std::make_pair(date, strtof(line.c_str(), NULL)));
 	}
 	file.close();

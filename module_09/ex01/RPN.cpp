@@ -14,8 +14,9 @@ RPN::~RPN() {}
 RPN & RPN::operator = (const RPN &) {return *this;}
 
 long RPN::Convert(std::string str) {
-	std::stack<long> stack;
-	long tmp = 0, res = 0;
+	std::stack<double> stack;
+	double tmp = 0;
+	double res = 0;
 	int single = 0;
 	char digit;
 
@@ -38,6 +39,8 @@ long RPN::Convert(std::string str) {
 				throw ParseException();
 			}
 			tmp = stack.top();
+			if (tmp == 0 && str[i] == '/')
+				throw ParseException();
 			stack.pop();
 			res = dooperation(stack.top(), tmp, str[i]);
 			stack.pop();
@@ -53,7 +56,7 @@ int parsearg(std::string str)
 	int nb_opesign = 0;
 	for (size_t i = 0; i < str.size(); i++)
 	{
-		if (isoperatorsign(str[i] && !isdigit(str[i]) && str[i] != ' '))
+		if (!isoperatorsign(str[i]) && !isdigit(str[i]) && str[i] != ' ')
 			return 1;
 		if (isdigit(str[i]))
 			nb_digit++;
@@ -72,7 +75,7 @@ bool isoperatorsign(const char c)
 	return (c == '+' || c == '-' || c == '/' || c == '*');
 }
 
-long dooperation(long first, long second, char c)
+double dooperation(double first, double second, char c)
 {
 	if (c == '+')
 		return first + second;
