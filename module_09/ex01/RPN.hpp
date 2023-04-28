@@ -9,8 +9,9 @@
 class RPN
 {
 public:
+	RPN(const std::string str);
 	~RPN();
-	static long Convert(std::string str);
+	long Convert(std::string str);
 	class ParseException : public std::exception {
 		public:
 		virtual const char* what() const throw() {return "Error";}; 
@@ -22,6 +23,7 @@ private:
 	RPN & operator = (const RPN &);
 };
 
+int parsearg(std::string str);
 bool isoperatorsign(const char c);
 long dooperation(long first, long second, char c);
 

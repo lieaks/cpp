@@ -7,6 +7,11 @@ int main(int ac, char **av)
 		std::cout << "Usage: ./RNP <input>" << std::endl;
 		return 1;
 	}
-	std::cout << RPN::Convert(av[1]) << std::endl;
+	try {
+		RPN calculator(av[1]);
+	}
+	catch (std::exception &e) {
+		std::cerr << e.what() << std::endl ;
+	}
 	return 0;
 }

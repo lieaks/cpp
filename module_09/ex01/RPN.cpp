@@ -2,6 +2,11 @@
 
 RPN::RPN() {}
 
+RPN::RPN(const std::string str) {
+
+	std::cout << Convert(str) << std::endl; 
+}
+
 RPN::RPN(const RPN &) {}
 
 RPN::~RPN() {}
@@ -11,26 +16,26 @@ RPN & RPN::operator = (const RPN &) {return *this;}
 long RPN::Convert(std::string str) {
 	std::stack<long> stack;
 	long tmp = 0, res = 0;
+	int single = 0;
 	char digit;
 
+	single = parsearg(str);
+	if (single == 1)
+		throw ParseException();
 	for (int i = 0; str[i]; i++)
 	{
-		if (str[i] == '(' || str[i] == ')') 
-		{
-			std::cerr << "Error" << std::endl;
-			throw ParseException();
-		}
 		if (isdigit(str[i]))
 		{
 			digit = str[i];
 			stack.push(atoi(&digit));
+			if (single == 2)
+				return stack.top();
 		}
 		else if (isoperatorsign(str[i]))
 		{
 			if (stack.size() < 2)
 			{
-				std::cerr << "Error" << std::endl;
-				exit (1);
+				throw ParseException();
 			}
 			tmp = stack.top();
 			stack.pop();
@@ -40,6 +45,26 @@ long RPN::Convert(std::string str) {
 		}
 	}
 	return res;
+}
+
+int parsearg(std::string str)
+{
+	int nb_digit = 0;
+	int nb_opesign = 0;
+	for (size_t i = 0; i < str.size(); i++)
+	{
+		if (isoperatorsign(str[i] && !isdigit(str[i]) && str[i] != ' '))
+			return 1;
+		if (isdigit(str[i]))
+			nb_digit++;
+		if (isoperatorsign(str[i]))
+			nb_opesign++;
+	}
+	if (nb_opesign == 0 && nb_digit == 1)
+		return 2;
+	if (nb_opesign == nb_digit - 1)
+		return 0;
+	return 1;
 }
 
 bool isoperatorsign(const char c)
