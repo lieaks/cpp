@@ -13,7 +13,7 @@ RPN::~RPN() {}
 
 RPN & RPN::operator = (const RPN &) {return *this;}
 
-long RPN::Convert(std::string str) {
+double RPN::Convert(std::string str) {
 	std::stack<double> stack;
 	double tmp = 0;
 	double res = 0;

@@ -11,7 +11,7 @@ class RPN
 public:
 	RPN(const std::string str);
 	~RPN();
-	long Convert(std::string str);
+	double Convert(std::string str);
 	class ParseException : public std::exception {
 		public:
 		virtual const char* what() const throw() {return "Error";}; 
